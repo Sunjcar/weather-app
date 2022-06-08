@@ -1,0 +1,43 @@
+const createDom = (() => {
+    function createEl(){
+    const container = document.createElement('div')
+    container.classList.add('container')
+    const header = document.createElement('header')
+    const location = document.createElement('input')
+    location.classList.add('cityInput')
+    const form = document.createElement('form')
+    form.classList.add('form')
+    const display = document.createElement('div')
+    display.classList.add('display')
+    const countryName = document.createElement('h1')
+    countryName.classList.add('countryName')
+    const cityName = document.createElement('h3')
+    cityName.classList.add('cityName')
+    const temperature = document.createElement('p')
+    temperature.classList.add('temperature')
+    const minTemp = document.createElement('p')
+    minTemp.classList.add('minTemp')
+    const feels_like = document.createElement('p')
+    feels_like.classList.add('feels-like')
+    const humidity = document.createElement('p')
+    humidity.classList.add('humidity')
+    const windSpeed = document.createElement('p')
+    windSpeed.classList.add('windSpeed')
+
+    document.body.appendChild(container)
+    container.appendChild(header)
+    container.appendChild(display)
+    header.appendChild(form)
+    form.appendChild(location)
+    display.appendChild(countryName)
+    display.appendChild(cityName)
+    display.appendChild(temperature)
+    display.appendChild(minTemp)
+    display.appendChild(feels_like)
+    display.appendChild(humidity)
+    display.appendChild(windSpeed)
+}createEl();
+
+})()
+
+export default createDom;
