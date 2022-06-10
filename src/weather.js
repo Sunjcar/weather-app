@@ -5,7 +5,7 @@ const weather = (() => {
             try {
               const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=5a0e6c7a85e564f80b2d41579a9a913e`,
                 { mode: "cors" });
-              if (!response.ok) throw new Error(`City ${city} not found`);
+              if (!response.ok) throw new Error(`${city} is not a city`);
               const weatherData = convertWeatherData(await response.json());
               console.log(weatherData)
               return weatherData
@@ -19,10 +19,11 @@ const weather = (() => {
         const {
             sys: {country: countryName},
             name: cityName,
-            main: {temp: temperature, temp_min: minTemp, feels_like: feels_like, humidity},
+            main: {temp: temperature, feels_like: feels_like, humidity},
             wind: {speed: windSpeed},
+            weather: [{main: weatherType}]
         } = data
-        return {countryName, cityName,temperature, minTemp, feels_like, humidity, windSpeed};
+        return {countryName, cityName,temperature, feels_like, humidity, windSpeed, weatherType};
     }
 
 })()
