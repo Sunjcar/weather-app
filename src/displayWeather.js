@@ -14,7 +14,7 @@ const displayWeather = (()=> {
         const humidity = document.querySelector('.humidity')
         const windSpeed = document.querySelector('.windSpeed')
         const weatherType = document.querySelector('.weatherType')
-        const weatherIcon = document.querySelector('.icon')
+        const weatherIcon = document.getElementById('icon')
 
         countryName.textContent =`${apiData.countryName}`
         cityName.textContent = `${apiData.cityName}`
@@ -25,17 +25,26 @@ const displayWeather = (()=> {
         windSpeed.textContent = `${apiData.windSpeed} km/h`
         weatherType.textContent = `${apiData.weatherType}`
       
-
+     
         if(weatherType.textContent === 'Rain'){
             document.body.style.backgroundImage='url(images/Rain.jpg)'
-            weatherIcon.classList = 'material-symbols-outlined'
             weatherIcon.textContent = 'rainy'
-        }
-        if (weatherType.textContent === 'Clouds'){
+        } else if (weatherType.textContent === 'Clouds' || weatherType.textContent === 'Clear'){
             document.body.style.backgroundImage='url(images/Clouds.jpg)'
-            weatherIcon.textContent = 'cloud'
-        }
+            weatherIcon.textContent = 'cloudy'
+        } else if (weatherType.textContent === 'Sunshine'){
+            document.body.style.backgroundImage='url(images/Sunny.jpg)'
+            weatherIcon.textContent = 'sunny'
+        } else if (weatherType.textContent === 'Foggy' || weatherType.textContent === 'Haze'
+    || weatherType.textContent === 'Mist'){
+            document.body.style.backgroundImage ='url(images/Foggy.jpg)'
+            weatherIcon.textContent = 'foggy'
+        } else if (weatherType.textContent === 'Storm'){
+            document.body.style.backgroundImage='url(images/Storm.jpg)'
+            weatherIcon.textContent = 'cloudy'
+        } 
     }
+
     return {weatherResults}
 })()
 

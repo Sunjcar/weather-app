@@ -59,7 +59,8 @@ const createDom = (() => {
     const weatherType = document.createElement('p')
     weatherType.classList.add('weatherType')
     const weatherIcon = document.createElement('span')
-    weatherIcon.classList.add('icon')
+    weatherIcon.classList = 'material-symbols-outlined'
+    weatherIcon.setAttribute('id', 'icon')
 
     document.body.appendChild(container)
     container.appendChild(header)
