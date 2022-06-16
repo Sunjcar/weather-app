@@ -1,22 +1,58 @@
+import createDom from "./createDom";
 import weather from "./weather";
 import displayWeather from "./displayWeather";
-import createDom from "./createDom";
+import API_KEY from "./api";
 
-const form = document.querySelector('.form')
-const location = document.querySelector('.cityInput')
-const feels = document.querySelector('.feels-text')
-const feelsIcon = document.querySelectorAll('material-symbols-outlined')
 
-form.addEventListener('submit',async (e)=>{
-  e.preventDefault();
-  if (location.value === '')return;
-  const apiData = await weather.searchWeather(location.value)
-  displayWeather.weatherResults(apiData)
-  location.value = ' '
+const searchInput = document.getElementById('cityInput');
+const btnSearch = document.getElementById('search');
+// SEARCH WITH CLICK
+btnSearch.addEventListener('click', () => {
+  weather.searchWeather(searchInput.value)
+    .then((result) => {
+      searchInput.value = '';
+      displayWeather.renderAll(result);
+    })
+    .catch((error) => {
+      alert(`Couldn't retrieve data for ${searchInput.value}:
+      ${error}`);
+    });
+});
 
-})
+// SEARCH WITH ENTER
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    weather.searchWeather(searchInput.value)
+    .then((result) => {
+      searchInput.value = '';
+      displayWeather.renderAll(result)
+    })
+    .catch((error) => {
+      alert(`Couldn't retrieve data for ${searchInput.value}:
+      ${error}`);
+    });;
+  }
+});
 
-async function defaultCity(){
-  const apiData = await weather.searchWeather('Portland')
-  displayWeather.weatherResults(apiData)
-}defaultCity();
+//Default Location
+function getLocalWeather () {
+
+  // GET GEOLOCATION
+  navigator.geolocation.getCurrentPosition((local) => {
+
+    // GET API DATA BASE ON GEOLOCATION COORDINATES
+    fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${local.coords.latitude}&lon=${local.coords.longitude}&exclude=hourly,minutely&units=imperial&appid=${API_KEY}`
+    )
+      .then((resolution) => resolution.json())
+      .then((data) => {  
+        displayWeather.weatherResults(data);
+        displayWeather.displayWeatherForecast(data.daily);
+      })
+      .catch((error) => {
+        alert(`Couldn't retrieve data for your location:
+        ${error}`);  
+      });
+  });
+};
+getLocalWeather();

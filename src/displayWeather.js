@@ -1,51 +1,72 @@
-import weather from "./weather";
 
+import weather from "./weather"
+import API_KEY from "./api";
 const displayWeather = (()=> {
-    function weatherResults (apiData){
-        if (!apiData) return
-        const display = document.querySelector('.display');
-        display.classList.add('active')
+    const timezone = document.getElementById('timezone');
+    const city = document.querySelector('.cityName');
+    const country = document.querySelector('.countryName')
+    const temperature = document.querySelector('.temperature');
+    const weatherType = document.querySelector('.weatherType');
+    const windSpeed = document.querySelector('.windSpeed');
+    const humidity = document.querySelector('.humidity');
+    const feels_like = document.querySelector('.feels-like');
+    const sunrise = document.getElementById('sunrise');
+    const sunset = document.getElementById('sunset');
+    const weatherIcon = document.getElementById('icon')
 
-        const countryName = document.querySelector('.countryName')
-        const cityName = document.querySelector('.cityName')
-        const temperature = document.querySelector('.temperature')
-       /*  const minTemp = document.querySelector('.minTemp') */
-        const feels_like = document.querySelector('.feels-like')
-        const humidity = document.querySelector('.humidity')
-        const windSpeed = document.querySelector('.windSpeed')
-        const weatherType = document.querySelector('.weatherType')
-        const weatherIcon = document.getElementById('icon')
+  function weatherResults (data) {
 
-        countryName.textContent =`${apiData.countryName}`
-        cityName.textContent = `${apiData.cityName}`
-        temperature.textContent = `${apiData.temperature}°C`
-      /*   minTemp.textContent = `Low Temp:${apiData.minTemp}°C` */
-        feels_like.textContent = `${apiData.feels_like}°C`
-        humidity.textContent = `${apiData.humidity}%`
-        windSpeed.textContent = `${apiData.windSpeed} km/h`
-        weatherType.textContent = `${apiData.weatherType}`
-      
-     
+      timezone.textContent = data.timezone;
+      temperature.textContent = `${data.current.temp} °F`;
+      weatherType.textContent = data.current.weather[0].main;
+      windSpeed.textContent = `${data.current.wind_speed} mp/h`;
+      humidity.textContent = `${data.current.humidity}%`;
+      feels_like.textContent = `${data.current.feels_like}°F`;
+      sunrise.textContent = window
+        .moment((data.current.sunrise + data.timezone_offset - 7200) * 1000)
+        .format('HH:mm a');
+      sunset.textContent = window
+        .moment((data.current.sunset + data.timezone_offset - 7200) * 1000)
+        .format('HH:mm a');
+
         if(weatherType.textContent === 'Rain'){
-            document.body.style.backgroundImage='url(images/Rain.jpg)'
-            weatherIcon.textContent = 'rainy'
-        } else if (weatherType.textContent === 'Clouds' || weatherType.textContent === 'Clear'){
-            document.body.style.backgroundImage='url(images/Clouds.jpg)'
-            weatherIcon.textContent = 'cloudy'
-        } else if (weatherType.textContent === 'Sunshine'){
-            document.body.style.backgroundImage='url(images/Sunny.jpg)'
-            weatherIcon.textContent = 'sunny'
-        } else if (weatherType.textContent === 'Foggy' || weatherType.textContent === 'Haze'
-    || weatherType.textContent === 'Mist'){
-            document.body.style.backgroundImage ='url(images/Foggy.jpg)'
-            weatherIcon.textContent = 'foggy'
-        } else if (weatherType.textContent === 'Storm'){
-            document.body.style.backgroundImage='url(images/Storm.jpg)'
-            weatherIcon.textContent = 'cloudy'
-        } 
+          document.body.style.backgroundImage='url(images/Rain.jpg)'
+          weatherIcon.textContent = 'rainy'
+      } else if (weatherType.textContent === 'Clouds'){
+          document.body.style.backgroundImage='url(images/Clouds.jpg)'
+          weatherIcon.textContent = 'cloudy'
+      } else if (weatherType.textContent === 'Sunshine' || weatherType.textContent === 'Clear'){
+          document.body.style.backgroundImage='url(images/Sunny.jpg)'
+          weatherIcon.textContent = 'sunny'
+      } else if (weatherType.textContent === 'Foggy' || weatherType.textContent === 'Haze'
+          || weatherType.textContent === 'Mist'){
+          document.body.style.backgroundImage ='url(images/Foggy.jpg)'
+          weatherIcon.textContent = 'foggy'
+      } else if (weatherType.textContent === 'Storm'){
+          document.body.style.backgroundImage='url(images/Storm.jpg)'
+          weatherIcon.textContent = 'cloudy'
+      } 
+  }
+  function displayWeatherForecast (data) {
+    for (let i = 0; i < (data.length - 1); i++) {
+      document.getElementById(`day-${i}`).textContent = window.moment(data[i].dt*1000).format('ddd');
+      document.getElementById(`day-temp-${i}`).textContent = data[i].temp.day;
+      document.getElementById(`night-temp-${i}`).textContent = data[i].temp.night;
+      document.getElementById(`icon-${i}`).src = `https://openweathermap.org/img/wn/${data[i].weather[0].icon}@2x.png`;
     }
+  };
+  
+  function renderAll(data) {
+    /* locality.innerText = data.geoData[0].name + ', ' + data.geoData[0].country; */
+    city.textContent = data.geoData[0].name
+    country.textContent = data.geoData[0].country;
+    weatherResults(data.forecastData);
+    displayWeatherForecast(data.forecastData.daily);
+  }
 
-    return {weatherResults}
+
+
+  return {weatherResults,displayWeatherForecast,renderAll}
 })()
 
 export default displayWeather;
