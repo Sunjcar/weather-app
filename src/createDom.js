@@ -44,6 +44,9 @@ function createEl(){
     //Right Container displays humidity, feels-like, windspeed
     const displayDetails = document.createElement('div')
     displayDetails.classList.add('weatherDetails')
+    const units = document.createElement('h1')
+    units.classList.add('temp-units')
+    units.textContent = '°F'
     const feels_like = document.createElement('p')
     feels_like.classList.add('feels-like')
     const feelsContent = document.createElement('div')
@@ -107,6 +110,7 @@ function createEl(){
     displayInfo.appendChild(sunsetText)
     displayInfo.appendChild(sunrise)
  
+    displayDetails.appendChild(units)
     displayDetails.appendChild(feelsContent)
     feelsContent.appendChild(feelsIcon)
     feelsContent.appendChild(feelsText)
@@ -135,10 +139,12 @@ function createEl(){
     const forecastDay = document.createElement('div')
     forecastDay.textContent = 'Day:' + ' '
     const dayTemp = document.createElement('span')
+    dayTemp.classList.add('day')
     dayTemp.setAttribute('id','day-temp-0')
     const forecastNight = document.createElement('div')
     forecastNight.textContent = 'Night:' + ' '
     const nightTemp = document.createElement('span')
+    nightTemp.classList.add('night')
     nightTemp.setAttribute('id','night-temp-0')
 
     container.appendChild(displayForecast)
@@ -164,10 +170,12 @@ function createEl(){
     const forecastDay1 = document.createElement('div')
     forecastDay1.textContent = 'Day:' + ' '
     const dayTemp1 = document.createElement('span')
+    dayTemp1.classList.add('day')
     dayTemp1.setAttribute('id','day-temp-1')
     const forecastNight1 = document.createElement('div')
     forecastNight1.textContent = 'Night:' + ' '
     const nightTemp1 = document.createElement('span')
+    nightTemp1.classList.add('night')
     nightTemp1.setAttribute('id','night-temp-1')
 
     displayForecast.appendChild(forecast1)
@@ -192,10 +200,12 @@ function createEl(){
     const forecastDay2 = document.createElement('div')
     forecastDay2.textContent = 'Day:' + ' '
     const dayTemp2 = document.createElement('span')
+    dayTemp2.classList.add('day')
     dayTemp2.setAttribute('id','day-temp-2')
     const forecastNight2 = document.createElement('div')
     forecastNight2.textContent = 'Night:' + ' '
     const nightTemp2 = document.createElement('span')
+    nightTemp2.classList.add('night')
     nightTemp2.setAttribute('id','night-temp-2')
 
     displayForecast.appendChild(forecast2)
@@ -220,10 +230,12 @@ function createEl(){
     const forecastDay3 = document.createElement('div')
     forecastDay3.textContent = 'Day:' + ' '
     const dayTemp3 = document.createElement('span')
+    dayTemp3.classList.add('day')
     dayTemp3.setAttribute('id','day-temp-3')
     const forecastNight3 = document.createElement('div')
     forecastNight3.textContent = 'Night:' + ' '
     const nightTemp3 = document.createElement('span')
+    nightTemp3.classList.add('night')
     nightTemp3.setAttribute('id','night-temp-3')
 
     displayForecast.appendChild(forecast3)
@@ -248,10 +260,12 @@ function createEl(){
     const forecastDay4 = document.createElement('div')
     forecastDay4.textContent = 'Day:' + ' '
     const dayTemp4 = document.createElement('span')
+    dayTemp4.classList.add('day')
     dayTemp4.setAttribute('id','day-temp-4')
     const forecastNight4 = document.createElement('div')
     forecastNight4.textContent = 'Night:' + ' '
     const nightTemp4 = document.createElement('span')
+    nightTemp4.classList.add('night')
     nightTemp4.setAttribute('id','night-temp-4')
 
     displayForecast.appendChild(forecast4)
@@ -276,10 +290,12 @@ function createEl(){
     const forecastDay5 = document.createElement('div')
     forecastDay5.textContent = 'Day:' + ' '
     const dayTemp5 = document.createElement('span')
+    dayTemp5.classList.add('day')
     dayTemp5.setAttribute('id','day-temp-5')
     const forecastNight5 = document.createElement('div')
     forecastNight5.textContent = 'Night:' + ' '
     const nightTemp5 = document.createElement('span')
+    nightTemp5.classList.add('night')
     nightTemp5.setAttribute('id','night-temp-5')
 
     displayForecast.appendChild(forecast5)
@@ -305,10 +321,12 @@ function createEl(){
     const forecastDay6 = document.createElement('div')
     forecastDay6.textContent = 'Day:' + ' '
     const dayTemp6 = document.createElement('span')
+    dayTemp6.classList.add('day')
     dayTemp6.setAttribute('id','day-temp-6')
     const forecastNight6 = document.createElement('div')
     forecastNight6.textContent = 'Night:' + ' '
     const nightTemp6 = document.createElement('span')
+    nightTemp6.classList.add('night')
     nightTemp6.setAttribute('id','night-temp-6')
 
     displayForecast.appendChild(forecast6)

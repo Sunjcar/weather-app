@@ -1,6 +1,5 @@
 import API_KEY from "./api";
 import displayWeather from "./displayWeather";
-
 const weather = (() => {
   async function searchWeather(city) {
     try {
@@ -14,12 +13,12 @@ const weather = (() => {
     console.log(forecastData)
     return { geoData, forecastData };j
           } catch (err) {
-            alert(err);
+            `Couldn't retrieve data for ${city.value}:
+      ${err}`;
           }
-  }return {searchWeather};
+  };
 
-
-
+  return {searchWeather}
 })()
 
 

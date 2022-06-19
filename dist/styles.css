@@ -61,3 +61,7 @@ header{
     font-family: 'Merriweather', serif;;
     gap:1rem;
 }
+
+.temp-units{
+    cursor: pointer;
+}

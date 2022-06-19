@@ -1,7 +1,7 @@
-
 import weather from "./weather"
-import API_KEY from "./api";
+
 const displayWeather = (()=> {
+    const units = document.querySelector('.temp-units')
     const timezone = document.getElementById('timezone');
     const city = document.querySelector('.cityName');
     const country = document.querySelector('.countryName')
@@ -13,6 +13,8 @@ const displayWeather = (()=> {
     const sunrise = document.getElementById('sunrise');
     const sunset = document.getElementById('sunset');
     const weatherIcon = document.getElementById('icon')
+    const dayTemp = document.querySelectorAll('.day')
+    const nightTemp = document.querySelectorAll('.night')
 
   function weatherResults (data) {
 
@@ -46,26 +48,88 @@ const displayWeather = (()=> {
           document.body.style.backgroundImage='url(images/Storm.jpg)'
           weatherIcon.textContent = 'cloudy'
       } 
+      units.addEventListener('click', () => {
+        let day;
+        let night;
+        let tempC
+        let feelsC 
+        let windKm
+        if(units.textContent === '°F'){
+          tempC = convertFtoC(data.current.temp).toFixed(2) + '°C';
+          feelsC = convertFtoC(data.current.feels_like).toFixed(2) + '°C'
+          windKm = convertMphToKmh(data.current.wind_speed).toFixed(2) + ' km/h'
+          temperature.textContent = tempC
+          feels_like.textContent = feelsC
+          windSpeed.textContent = windKm
+          units.textContent = '°C'
+        for (let i = 0; i< dayTemp.length; i++){
+          day = convertFtoC(dayTemp[i].textContent).toFixed(1)
+          dayTemp[i].textContent = day
+        }
+        for (let i = 0; i < nightTemp.length; i++){
+          night = convertFtoC(nightTemp[i].textContent).toFixed(1) 
+          nightTemp[i].textContent = night
+        }
+      } else if (units.textContent === '°C'){
+        tempC = convertCtoF(parseFloat(temperature.textContent))
+        console.log(tempC)
+        temperature.textContent = tempC.toFixed(2) + '°F';
+        feelsC = convertCtoF(parseFloat(feels_like.textContent))
+        feels_like.textContent = feelsC.toFixed(2) + '°F';
+        windKm = convertKmhToMph(parseFloat(windSpeed.textContent))
+        windSpeed.textContent = windKm.toFixed(2) + ' mp/h'
+
+        for (let i = 0; i< dayTemp.length; i++){
+          day = convertCtoF(dayTemp[i].textContent).toFixed(1)
+          dayTemp[i].textContent = day
+        }
+        for (let i = 0; i < nightTemp.length; i++){
+          night = convertCtoF(nightTemp[i].textContent).toFixed(1) 
+          nightTemp[i].textContent = night
+        }
+        units.textContent = '°F'
+      }
+      }) 
   }
+
   function displayWeatherForecast (data) {
     for (let i = 0; i < (data.length - 1); i++) {
       document.getElementById(`day-${i}`).textContent = window.moment(data[i].dt*1000).format('ddd');
       document.getElementById(`day-temp-${i}`).textContent = data[i].temp.day;
       document.getElementById(`night-temp-${i}`).textContent = data[i].temp.night;
       document.getElementById(`icon-${i}`).src = `https://openweathermap.org/img/wn/${data[i].weather[0].icon}@2x.png`;
-    }
+ 
   };
-  
+  }
+
+  function convertFtoC(tempInF) {
+    const tempInC = (tempInF - 32) * (5 / 9);
+    return tempInC;
+  }
+
+  function convertCtoF(temp) {
+    const tempInF = (temp * 1.8) + 32;
+    return tempInF;
+  }
+
+  function convertKmhToMph(kmh) {
+    const mph = kmh * 0.6213711922;
+    return mph;
+  }
+
+  function convertMphToKmh(mph) {
+    const kmph = mph * 1.609344;
+    return kmph;
+  }
+
   function renderAll(data) {
-    /* locality.innerText = data.geoData[0].name + ', ' + data.geoData[0].country; */
     city.textContent = data.geoData[0].name
     country.textContent = data.geoData[0].country;
     weatherResults(data.forecastData);
     displayWeatherForecast(data.forecastData.daily);
   }
 
-
-
+  
   return {weatherResults,displayWeatherForecast,renderAll}
 })()
 
