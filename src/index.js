@@ -42,7 +42,7 @@ searchInput.addEventListener('keydown', (e) => {
   }
 });
 
-
+//Switches Between °F and °C
 units.addEventListener('click', () => {
   let day;
   let night;
@@ -58,11 +58,11 @@ units.addEventListener('click', () => {
     windSpeed.textContent = windKm
     units.textContent = '°C'
   for (let i = 0; i< dayTemp.length; i++){
-    day = displayWeather.convertFtoC(dayTemp[i].textContent).toFixed(1)
+    day = displayWeather.convertFtoC(dayTemp[i].textContent).toFixed(2)
     dayTemp[i].textContent = day
   }
   for (let i = 0; i < nightTemp.length; i++){
-    night = displayWeather.convertFtoC(nightTemp[i].textContent).toFixed(1) 
+    night = displayWeather.convertFtoC(nightTemp[i].textContent).toFixed(2) 
     nightTemp[i].textContent = night
   }
 } else if (units.textContent === '°C'){
@@ -74,11 +74,11 @@ units.addEventListener('click', () => {
   windSpeed.textContent = windKm.toFixed(2) + ' mp/h'
 
   for (let i = 0; i< dayTemp.length; i++){
-    day = displayWeather.convertCtoF(dayTemp[i].textContent).toFixed(1)
+    day = displayWeather.convertCtoF(dayTemp[i].textContent).toFixed(2)
     dayTemp[i].textContent = day
   }
   for (let i = 0; i < nightTemp.length; i++){
-    night = displayWeather.convertCtoF(nightTemp[i].textContent).toFixed(1) 
+    night = displayWeather.convertCtoF(nightTemp[i].textContent).toFixed(2) 
     nightTemp[i].textContent = night
   }
   units.textContent = '°F'
