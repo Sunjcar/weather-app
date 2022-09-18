@@ -44,8 +44,11 @@ header{
 }
 
 .display-forecast{
-    display:flex;
-    justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 1rem;
 }
 
 .forecast-container{
